@@ -39,10 +39,12 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 #include "iqconverter_int16.h"
 #include "filters.h"
 
+#if !defined(__STDC_VERSION__) || __STDC_VERSION__ < 202311L
 #ifndef bool
 typedef int bool;
 #define true 1
 #define false 0
+#endif
 #endif
 
 #define UNPACKED_SIZE (16) /* ADC Sample unpacked size in bits */

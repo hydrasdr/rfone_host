@@ -36,10 +36,12 @@
 
 #define HYDRASDR_RX_VERSION "1.0.0 2025"
 
+#if !defined(__STDC_VERSION__) || __STDC_VERSION__ < 202311L
 #ifndef bool
 typedef int bool;
 #define true 1
 #define false 0
+#endif
 #endif
 
 #ifdef _WIN32

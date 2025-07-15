@@ -26,10 +26,12 @@
 #include <string.h>
 #include <getopt.h>
 
+#if !defined(__STDC_VERSION__) || __STDC_VERSION__ < 202311L
 #ifndef bool
 typedef int bool;
 #define true 1
 #define false 0
+#endif
 #endif
 
 #define REGISTER_NUM_MIN (0)

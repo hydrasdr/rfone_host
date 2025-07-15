@@ -26,10 +26,12 @@
 #include <sys/types.h>
 #include <time.h>
 
+#if !defined(__STDC_VERSION__) || __STDC_VERSION__ < 202311L
 #ifndef bool
 typedef int bool;
 #define true 1
 #define false 0
+#endif
 #endif
 
 #define HYDRASDR_FLASH_CALIB_OFFSET (0x20000) /* After 128KB (Reserved for Firmware + 64KB Spare) */
