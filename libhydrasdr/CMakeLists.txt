@@ -150,7 +150,7 @@ CONFIGURE_FILE(
 
 INSTALL(
   FILES ${CMAKE_CURRENT_BINARY_DIR}/libhydrasdr.pc
-  DESTINATION lib${LIB_SUFFIX}/pkgconfig
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
 )
 
 ########################################################################
