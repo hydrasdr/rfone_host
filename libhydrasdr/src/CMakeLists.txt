@@ -97,6 +97,12 @@ function(libhydrasdr_common_settings libtarget)
       COMPONENT sharedlibs)
   endif( ${UNIX} )
   if( ${WIN32} )
+    if( THREADS_PTHREADS_WIN32_LIBRARY )
+      target_link_libraries(${libtarget} PRIVATE ${THREADS_PTHREADS_WIN32_LIBRARY} )
+    endif()
+    if( THREADS_PTHREADS_INCLUDE_DIR )
+      target_include_directories(${libtarget} PRIVATE ${THREADS_PTHREADS_INCLUDE_DIR})
+    endif()
     install(TARGETS ${libtarget} EXPORT HydraSDRTargets
       DESTINATION bin
       COMPONENT sharedlibs)
