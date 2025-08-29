@@ -9,7 +9,11 @@
 
 name: Build and Release HydraSDR RFOne Host Tools + Shared Lib / DLL (Windows, GNU/Linux, MacOS)
 
-on: push
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 env:
   # Global environment variables
