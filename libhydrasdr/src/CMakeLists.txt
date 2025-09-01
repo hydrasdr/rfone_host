@@ -75,7 +75,12 @@ if(MINGW)
     -I ${CMAKE_CURRENT_BINARY_DIR}
     -o ${CMAKE_CURRENT_BINARY_DIR}/hydrasdrrc.obj
     -i ${CMAKE_CURRENT_SOURCE_DIR}/win32/hydrasdr.rc)
-  set(HYDRASDR_DLL_SRCS ${CMAKE_CURRENT_BINARY_DIR}/hydrasdrrc.obj)
+  set(HYDRASDR_DLL_OBJS ${CMAKE_CURRENT_BINARY_DIR}/hydrasdrrc.obj)
+  SET_SOURCE_FILES_PROPERTIES(
+    ${HYDRASDR_DLL_OBJS}
+    PROPERTIES
+    EXTERNAL_OBJECT true
+    GENERATED true)
 endif(MINGW)
 
 # Settings common for shared and static libraries
@@ -111,7 +116,7 @@ endfunction()
 
 # Dynamic library
 if(ENABLE_SHARED_LIB)
-  add_library(hydrasdr SHARED ${_C_SOURCES_} ${HYDRASDR_DLL_SRCS})
+  add_library(hydrasdr SHARED ${_C_SOURCES_} ${HYDRASDR_DLL_OBJS})
   set_target_properties(hydrasdr PROPERTIES VERSION
     ${HYDRASDR_VER_MAJOR}.${HYDRASDR_VER_MINOR}.${HYDRASDR_VER_REVISION}
   )
@@ -126,7 +131,7 @@ endif()
 
 # Static library
 if(ENABLE_STATIC_LIB)
-  add_library(hydrasdr_static STATIC ${_C_SOURCES_})
+  add_library(hydrasdr_static STATIC ${_C_SOURCES_} ${HYDRASDR_DLL_OBJS})
   libhydrasdr_common_settings(hydrasdr_static)
   if(MSVC)
     set_target_properties(hydrasdr_static PROPERTIES
