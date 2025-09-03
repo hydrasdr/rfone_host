@@ -27,8 +27,6 @@ set(PACKAGE hydrasdr-tools)
 set(VERSION_STRING ${MAJOR_VERSION}.${MINOR_VERSION})
 set(VERSION ${VERSION_STRING})
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake/modules)
-set(CMAKE_C_FLAGS_RELEASE "-O2")
-set(CMAKE_BUILD_TYPE Release)
 add_definitions(-D_FILE_OFFSET_BITS=64)
 
 if(MSVC)

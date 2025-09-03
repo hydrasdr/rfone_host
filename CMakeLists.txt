@@ -5,8 +5,14 @@ project(hydrasdr_all LANGUAGES C HOMEPAGE_URL https://hydrasdr.com/)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+if(NOT CMAKE_BUILD_TYPE)
+  message(STATUS "Build type not specified: defaulting to Release.")
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
 #provide missing strtoull() for VC11
 if(MSVC11)
+  message("provide missing strtoull() for VC11")
   add_definitions(-Dstrtoull=_strtoui64)
 endif(MSVC11)
 
