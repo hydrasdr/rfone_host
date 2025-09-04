@@ -1033,6 +1033,7 @@ jobs:
 
     - name: Create platform-specific archives
       run: |
+        rm -rf hydrasdr_all
         mkdir hydrasdr_all
         
         # First, copy all native package files (now with distribution-specific names)
