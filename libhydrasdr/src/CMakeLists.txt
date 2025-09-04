@@ -61,7 +61,7 @@ if( ${CYGWIN} )
 endif( ${CYGWIN} )
 
 if( ${WIN32} )
-  list(APPEND _C_SOURCES win32/hydrasdr.rc)
+  list(APPEND _C_SOURCES_ win32/hydrasdr.rc)
 endif()
 
 if(MINGW)
@@ -112,7 +112,7 @@ function(libhydrasdr_common_settings libtarget)
     if( THREADS_PTHREADS_INCLUDE_DIR )
       target_include_directories(${libtarget} PRIVATE ${THREADS_PTHREADS_INCLUDE_DIR})
     endif()
-    target_link_libraries(${libtarget} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/win32 )
+    target_include_directories(${libtarget} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/win32 )
     install(TARGETS ${libtarget} EXPORT HydraSDRTargets
       DESTINATION bin
       COMPONENT sharedlibs)
