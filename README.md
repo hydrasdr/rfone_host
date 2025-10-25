@@ -49,7 +49,7 @@ Launch mingw64
 
 `pacman -Syu`
 
-`pacman -S cmake mingw-w64-x86_64-libusb`
+`pacman -S cmake mingw-w64-x86_64-libusb mingw-w64-x86_64-ninja`
 
 `git clone https://github.com/hydrasdr/rfone_host.git rfone_host`
 
@@ -59,20 +59,15 @@ Launch mingw64
 
 `cd build`
 
-Normal version:
+`cmake ../ -G "Ninja" -DLIBUSB_INCLUDE_DIR=/mingw64/include/libusb-1.0/`
 
-* 
-`cmake ../ -G "MSYS Makefiles" -DLIBUSB_INCLUDE_DIR=/mingw64/include/libusb-1.0/`
+`cmake --build . --config Release`
 
-Debug version:
+For a release build with install (need need administrative privileges):
+`cmake --build . --config Release --target install`
 
-* 
-`cmake ../ -G "MSYS Makefiles" -DCMAKE_BUILD_TYPE=Debug -DLIBUSB_INCLUDE_DIR=/mingw64/include/libusb-1.0/`
-
-`make`
-
-`make install`
-
+For a specific build type (e.g., Debug):
+`cmake --build . --config Debug`
 
 ## How to build the rfone_host software on Linux:
 
