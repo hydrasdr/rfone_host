@@ -60,7 +60,7 @@ if( ${CYGWIN} )
   SET(WIN32 ON)
 endif( ${CYGWIN} )
 
-if( ${WIN32} AND NOT MINGW )
+if(WIN32 AND MSVC)
   list(APPEND _C_SOURCES_ win32/hydrasdr.rc)
 endif()
 
