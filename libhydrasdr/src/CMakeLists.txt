@@ -15,8 +15,8 @@
 # notice, this list of conditions and the following
 # disclaimer. Redistributions in binary form must reproduce the above
 # copyright notice, this list of conditions and the following
-# disclaimer in the ocumentation and/or other materials provided with
-# the distribution. Neither the name of Great Scott Gadgets nor the
+# disclaimer in the documentation and/or other materials provided with
+# the distribution. Neither the name of HydraSDR nor the
 # names of its contributors may be used to endorse or promote products
 # derived from this software without specific prior written permission.
 #
@@ -60,7 +60,7 @@ if( ${CYGWIN} )
   SET(WIN32 ON)
 endif( ${CYGWIN} )
 
-if( ${WIN32} )
+if( ${WIN32} AND NOT MINGW )
   list(APPEND _C_SOURCES_ win32/hydrasdr.rc)
 endif()
 
