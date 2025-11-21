@@ -89,7 +89,7 @@ void iqconverter_int16_reset(iqconverter_int16_t *cnv)
 	cnv->old_x = 0;
 	cnv->old_y = 0;
 	cnv->old_e = 0;
-	memset(cnv->delay_line, 0, cnv->len * sizeof(int16_t) / 4);
+	memset(cnv->delay_line, 0, cnv->len * sizeof(int32_t) / 4);
 	memset(cnv->fir_queue, 0, cnv->len * sizeof(int16_t) * SIZE_FACTOR);
 }
 
