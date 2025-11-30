@@ -43,10 +43,4 @@ if(WIN32 AND MINGW)
     C:\\msys64\\mingw64\\bin\\libusb-1.0.dll
     ${CMAKE_CURRENT_BINARY_DIR}/hydrasdr-tools/src/libusb-1.0.dll
     COPYONLY)
-
-  message("copy libwinpthread-1.dll")
-  configure_file(
-    C:\\msys64\\mingw64\\bin\\libwinpthread-1.dll
-    ${CMAKE_CURRENT_BINARY_DIR}/hydrasdr-tools/src/libwinpthread-1.dll
-    COPYONLY)
 endif()

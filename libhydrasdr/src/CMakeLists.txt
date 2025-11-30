@@ -97,8 +97,27 @@ function(libhydrasdr_common_settings libtarget)
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/libhydrasdr>)
 
+  # Optimization flags for GCC/Clang/MinGW (Release only)
+  if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang" OR MINGW)
+    target_compile_options(${libtarget} PRIVATE
+      $<$<CONFIG:Release>:-O3>
+    )
+  endif()
+
   # Dependencies
-  target_link_libraries(${libtarget} PRIVATE LIBUSB::LIBUSB Threads::Threads)
+  target_link_libraries(${libtarget} PRIVATE LIBUSB::LIBUSB)
+
+  if(MINGW)
+    # For MinGW, we want to link system libs and pthreads statically
+    # so the DLL doesn't depend on libwinpthread-1.dll or libgcc_s_seh-1.dll.
+    target_link_options(${libtarget} PRIVATE -static-libgcc -static-libstdc++)
+    
+    # Link winpthread statically, then switch back to dynamic for other libs (like libusb)
+    target_link_libraries(${libtarget} PRIVATE -Wl,-Bstatic -lwinpthread -Wl,-Bdynamic)
+  else()
+    # Standard behavior for Linux/MSVC
+    target_link_libraries(${libtarget} PRIVATE Threads::Threads)
+  endif()
 
   if( ${UNIX} )
     install(TARGETS ${libtarget} EXPORT HydraSDRTargets
@@ -106,7 +125,8 @@ function(libhydrasdr_common_settings libtarget)
       COMPONENT sharedlibs)
   endif( ${UNIX} )
   if( ${WIN32} )
-    if( THREADS_PTHREADS_WIN32_LIBRARY )
+    if( THREADS_PTHREADS_WIN32_LIBRARY AND NOT MINGW )
+      # Only use external pthread lib definition if NOT MinGW (handled above)
       target_link_libraries(${libtarget} PRIVATE ${THREADS_PTHREADS_WIN32_LIBRARY} )
     endif()
     if( THREADS_PTHREADS_INCLUDE_DIR )
@@ -152,3 +172,41 @@ install(FILES ${_C_HEADERS_}
   DESTINATION include/${PROJECT_NAME}
   COMPONENT headers
 )
+
+# Verbose compiler information
+message(STATUS "")
+message(STATUS "========== libhydrasdr Compiler Configuration ==========")
+message(STATUS "C Compiler ID:        ${CMAKE_C_COMPILER_ID}")
+message(STATUS "C Compiler Version:   ${CMAKE_C_COMPILER_VERSION}")
+message(STATUS "C Compiler:           ${CMAKE_C_COMPILER}")
+message(STATUS "CXX Compiler ID:      ${CMAKE_CXX_COMPILER_ID}")
+message(STATUS "CXX Compiler Version: ${CMAKE_CXX_COMPILER_VERSION}")
+message(STATUS "CXX Compiler:         ${CMAKE_CXX_COMPILER}")
+message(STATUS "Build Type:           ${CMAKE_BUILD_TYPE}")
+message(STATUS "")
+message(STATUS "C Flags:              ${CMAKE_C_FLAGS}")
+message(STATUS "C Flags (Debug):      ${CMAKE_C_FLAGS_DEBUG}")
+message(STATUS "C Flags (Release):    ${CMAKE_C_FLAGS_RELEASE}")
+message(STATUS "C Flags (RelWithDeb): ${CMAKE_C_FLAGS_RELWITHDEBINFO}")
+message(STATUS "C Flags (MinSizeRel): ${CMAKE_C_FLAGS_MINSIZEREL}")
+message(STATUS "")
+message(STATUS "CXX Flags:            ${CMAKE_CXX_FLAGS}")
+message(STATUS "CXX Flags (Debug):    ${CMAKE_CXX_FLAGS_DEBUG}")
+message(STATUS "CXX Flags (Release):  ${CMAKE_CXX_FLAGS_RELEASE}")
+message(STATUS "")
+message(STATUS "Linker Flags:         ${CMAKE_EXE_LINKER_FLAGS}")
+message(STATUS "Shared Linker Flags:  ${CMAKE_SHARED_LINKER_FLAGS}")
+message(STATUS "Static Linker Flags:  ${CMAKE_STATIC_LINKER_FLAGS}")
+message(STATUS "")
+if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang" OR MINGW)
+  message(STATUS "Custom Optimization:  -O3 (Release only)")
+endif()
+if(MINGW)
+  message(STATUS "MinGW Link Options:   -static-libgcc -static-libstdc++")
+  message(STATUS "MinGW Static Libs:    -Wl,-Bstatic -lwinpthread -Wl,-Bdynamic")
+endif()
+message(STATUS "")
+message(STATUS "System:               ${CMAKE_SYSTEM_NAME} ${CMAKE_SYSTEM_VERSION}")
+message(STATUS "Processor:            ${CMAKE_SYSTEM_PROCESSOR}")
+message(STATUS "=========================================================")
+message(STATUS "")
