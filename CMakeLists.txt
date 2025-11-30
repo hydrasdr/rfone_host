@@ -39,8 +39,23 @@ add_custom_target(uninstall
 
 if(WIN32 AND MINGW)
   message("copy libusb-1.0.dll")
-  configure_file(
-    C:\\msys64\\mingw64\\bin\\libusb-1.0.dll
-    ${CMAKE_CURRENT_BINARY_DIR}/hydrasdr-tools/src/libusb-1.0.dll
-    COPYONLY)
+  
+  # Find the directory where the compiler is (e.g. .../mingw64/bin)
+  get_filename_component(_MINGW_BIN ${CMAKE_C_COMPILER} DIRECTORY)
+  
+  # Find the DLL in that directory
+  find_file(LIBUSB_1_0_DLL libusb-1.0.dll 
+    HINTS ${_MINGW_BIN} 
+    NO_DEFAULT_PATH
+  )
+
+  if(LIBUSB_1_0_DLL)
+    message(STATUS "Found libusb-1.0.dll at ${LIBUSB_1_0_DLL}")
+    configure_file(
+      ${LIBUSB_1_0_DLL}
+      ${CMAKE_CURRENT_BINARY_DIR}/hydrasdr-tools/src/libusb-1.0.dll
+      COPYONLY)
+  else()
+    message(WARNING "libusb-1.0.dll not found in ${_MINGW_BIN}, skipping copy.")
+  endif()
 endif()
