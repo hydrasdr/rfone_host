@@ -75,3 +75,8 @@ add_executable(hydrasdr_set_rf_port hydrasdr_set_rf_port.c)
 target_link_libraries(hydrasdr_set_rf_port ${TOOLS_LINK_LIBS})
 install(TARGETS hydrasdr_set_rf_port
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+add_executable(hydrasdr_async_rx hydrasdr_async_rx.c)
+target_link_libraries(hydrasdr_async_rx ${TOOLS_LINK_LIBS})
+install(TARGETS hydrasdr_async_rx
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
