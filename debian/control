@@ -1,4 +1,4 @@
-Source: rfone-host
+Source: hydrasdr-host-tools
 Section: comm
 Priority: optional
 Maintainer: Benjamin Vernoux <bvernoux@hydrasdr.com>
@@ -39,7 +39,7 @@ Description: HydraSDR RFOne Host Tools and Libraries (Debian/Ubuntu)
  .
  This package contains the shared library.
 
-Package: rfone-host
+Package: hydrasdr-host-tools
 Architecture: any
 Depends: ${misc:Depends},
  ${shlibs:Depends},
