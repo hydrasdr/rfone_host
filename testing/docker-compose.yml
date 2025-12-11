@@ -1,0 +1,166 @@
+services:
+  debian_sid:
+    build:
+      context: .
+      dockerfile: Dockerfile.debian
+      args:
+        IMAGE_TAG: sid
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - '/dev/bus/usb:/dev/bus/usb'
+  debian_trixie:
+    build:
+      context: .
+      dockerfile: Dockerfile.debian
+      args:
+        IMAGE_TAG: trixie
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - '/dev/bus/usb:/dev/bus/usb'
+  debian_bookworm:
+    build:
+      context: .
+      dockerfile: Dockerfile.debian
+      args:
+        IMAGE_TAG: bookworm
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - '/dev/bus/usb:/dev/bus/usb'
+  debian_bullseye:
+    build:
+      context: .
+      dockerfile: Dockerfile.debian
+      args:
+        IMAGE_TAG: bullseye
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - '/dev/bus/usb:/dev/bus/usb'
+  ubuntu_plucky:
+    build:
+      context: .
+      dockerfile: Dockerfile.debian
+      args:
+        IMAGE_NAME: ubuntu
+        IMAGE_TAG: plucky
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - '/dev/bus/usb:/dev/bus/usb'
+  ubuntu_noble:
+    build:
+      context: .
+      dockerfile: Dockerfile.debian
+      args:
+        IMAGE_NAME: ubuntu
+        IMAGE_TAG: noble
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - '/dev/bus/usb:/dev/bus/usb'
+  ubuntu_jammy:
+    build:
+      context: .
+      dockerfile: Dockerfile.debian
+      args:
+        IMAGE_NAME: ubuntu
+        IMAGE_TAG: jammy
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - '/dev/bus/usb:/dev/bus/usb'
+  ubuntu_focal:
+    build:
+      context: .
+      dockerfile: Dockerfile.debian
+      args:
+        IMAGE_NAME: ubuntu
+        IMAGE_TAG: focal
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - '/dev/bus/usb:/dev/bus/usb'
+  fedora_44:
+    build:
+      context: .
+      dockerfile: Dockerfile.fedora
+      args:
+        IMAGE_TAG: 44
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - '/dev/bus/usb:/dev/bus/usb'
+  fedora_43:
+    build:
+      context: .
+      dockerfile: Dockerfile.fedora
+      args:
+        IMAGE_TAG: 43
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - '/dev/bus/usb:/dev/bus/usb'
+  fedora_42:
+    build:
+      context: .
+      dockerfile: Dockerfile.fedora
+      args:
+        IMAGE_TAG: 42
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - '/dev/bus/usb:/dev/bus/usb'
+  fedora_41:
+    build:
+      context: .
+      dockerfile: Dockerfile.fedora
+      args:
+        IMAGE_TAG: 41
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - '/dev/bus/usb:/dev/bus/usb'
+  almalinux_10:
+    build:
+      context: .
+      dockerfile: Dockerfile.fedora
+      args:
+        IMAGE_NAME: almalinux
+        IMAGE_TAG: 10
+        RHEL: 1
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - '/dev/bus/usb:/dev/bus/usb'
+  almalinux_9:
+    build:
+      context: .
+      dockerfile: Dockerfile.fedora
+      args:
+        IMAGE_NAME: almalinux
+        IMAGE_TAG: 9
+        RHEL: 1
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - '/dev/bus/usb:/dev/bus/usb'
+  archlinux:
+    build:
+      context: .
+      dockerfile: Dockerfile.archlinux
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - '/dev/bus/usb:/dev/bus/usb'
+  opensuse_tumbleweed:
+    build:
+      context: .
+      dockerfile: Dockerfile.opensuse
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - '/dev/bus/usb:/dev/bus/usb'
+

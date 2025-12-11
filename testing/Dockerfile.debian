@@ -1,0 +1,36 @@
+ARG IMAGE_NAME=debian
+ARG IMAGE_TAG=latest
+FROM ${IMAGE_NAME}:${IMAGE_TAG}
+LABEL org.opencontainers.image.authors='Daniel Ekman <knegge@gmail.com>'
+
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Etc/UTC
+
+RUN apt update &&\
+    apt install -qy \
+        build-essential \
+        cmake \
+        git \
+        libsoapysdr-dev \
+        libusb-1.0-0-dev \
+        pkg-config \
+        soapysdr-tools
+
+ARG HOST_TOOLS_REF=https://github.com/hydrasdr/rfone_host.git
+RUN git clone --depth 1 ${HOST_TOOLS_REF} hydrasdr-host &&\
+    cd hydrasdr-host &&\
+    cmake -B build \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr &&\
+    cmake --build build --target install
+
+ARG SOAPY_MODULE_REF=https://github.com/hydrasdr/SoapyHydraSDR.git
+RUN git clone --depth 1 ${SOAPY_MODULE_REF} soapyhydrasdr &&\
+    cd soapyhydrasdr &&\
+    cmake -B build \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr&&\
+    cmake --build build --target install
+
+COPY test.sh /
+CMD ["bash", "/test.sh"]
